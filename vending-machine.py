@@ -3,7 +3,7 @@ from unicodedata import decimal
 
 class vendingMachine ():
     def __init__(self) -> None:
-        self.totalInMachine = 0.0
+        self.totalInMachine = Decimal("{:.2f}".format(float(0.00)))
         self.moneyInMachine = {.25:100,
          .05:100,
          .10:100,
@@ -21,7 +21,7 @@ class vendingMachine ():
     def insertMoney (self,amount):
         
         
-        self.totalInMachine += self.translation[amount]
+        self.totalInMachine += Decimal("{:.2f}".format(float(self.translation[amount])))
         #self.totalInMachine =round(self.totalInMachine, 2)
         print('After Inserting {} your total is {}'.format(amount,self.totalInMachine))
     def coinReturn(self):
@@ -33,11 +33,12 @@ class vendingMachine ():
         x = -1
         print(sorted_amount)
         #print(sorted_amount[-1])
-        while self.totalInMachine> 0:
+        self.totalInMachine=Decimal('{:.2f}'.format(self.totalInMachine))
+        while self.totalInMachine> 0.01:
             
-            self.totalInMachine=Decimal('{:.2}'.format(self.totalInMachine))
-            cur_ammount=Decimal('{:.2}'.format(float(sorted_amount[x])))
-            #print(self.totalInMachine,x, sorted_amount[x],self.totalInMachine >= sorted_amount[x])
+            self.totalInMachine=Decimal('{:.2f}'.format(self.totalInMachine))
+            cur_ammount=Decimal('{:.2f}'.format(float(sorted_amount[x])))
+            print(self.totalInMachine,x, sorted_amount[x],self.totalInMachine >= sorted_amount[x])
             if self.totalInMachine >= cur_ammount:
                 
                 self.totalInMachine -= cur_ammount
@@ -58,4 +59,14 @@ VM = vendingMachine()
 VM.insertMoney('dollar')
 VM.insertMoney('dollar')
 VM.insertMoney('dime')
+VM.insertMoney('nickel')
+VM.insertMoney('quarter')
+VM.insertMoney('quarter')
+VM.insertMoney('quarter')
+VM.insertMoney('quarter')
+VM.insertMoney('quarter')
+VM.insertMoney('dollar')
+VM.insertMoney('dime')
+VM.insertMoney('nickel')
+
 print(VM.coinReturn())

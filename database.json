@@ -1,0 +1,33 @@
+{
+    "moneyInMachine": {
+        "0.25": 96,
+        "0.05": 100,
+        "0.10": 100,
+        "1.00": 104
+    },
+    "translation": {
+        "quarter": "0.25",
+        "nickel": "0.05",
+        "dime": "0.10",
+        "dollar": "1.00",
+        "0.25": "quarter",
+        "0.05": "nickel",
+        "0.10": "dime",
+        "1.00": "dollar"
+    },
+    "password": "Admin",
+    "product": {
+        "itemA": {
+            "price": "1.50",
+            "quantity": 98
+        },
+        "itemB": {
+            "price": "1.50",
+            "quantity": 100
+        },
+        "itemC": {
+            "price": "1.50",
+            "quantity": 100
+        }
+    }
+}

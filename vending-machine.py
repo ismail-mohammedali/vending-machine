@@ -93,27 +93,48 @@ class vendingMachine ():
         self.storeInDatabase()
         return True
     def service(self,password):
-        if self.password == password:
-            "Print"
-        else:
+        #1- Ability to change amount 
+        #2- ability to add and remove items 
+        #3- 
+        if self.data['password'] != password:
             return "The Password is incorrect"
+        action = 0 
+        while action !=-1: 
+            action = int(input ("Please Enter 1 to change amount in the machine.\nPlease enter 2 to change the product price or quantity\n\n\nPlease enter -1 to exit service mode\n\n"))
+            if action ==1: 
+                for amount in self.data['moneyInMachine']:
+                    quantityDelta = int(input("\n\nPlease enter positve or negetive value to change the {}$ by that number.\nNegetive number can't be less than current quatity of the curreny or it will not take the changes.\n\n".format(amount)))
+                    if self.data['moneyInMachine'][amount]+quantityDelta >=0:
+                        self.data['moneyInMachine'][amount]= self.data['moneyInMachine'][amount]+quantityDelta
+                    else: 
+                        print("changes did not take affect as you are removing more for Vending machine than it currently has! Please try again for {}$".format(amount))
+                    
+                    
+                    
+                    
+                    
+            elif action ==2: 
+                pass
+            
+        self.storeInDatabase()    
+        
         
 
 VM = vendingMachine()
 #print(VM.data)
-
-VM.insertMoney('dollar')
-VM.insertMoney('dollar')
-VM.insertMoney('dime')
-VM.insertMoney('nickel')
-VM.insertMoney('quarter')
-print(VM.curTotalInMachine)
-VM.getItem('itemA')
-VM.getItem('itemA')
-print(VM.curTotalInMachine)
-print(VM.data)
-print(VM.coinReturn())
-print(VM.data)
+VM.service("Admin")
+# VM.insertMoney('dollar')
+# VM.insertMoney('dollar')
+# VM.insertMoney('dime')
+# VM.insertMoney('nickel')
+# VM.insertMoney('quarter')
+# print(VM.curTotalInMachine)
+# VM.getItem('itemA')
+# VM.getItem('itemA')
+# print(VM.curTotalInMachine)
+# print(VM.data)
+# print(VM.coinReturn())
+# print(VM.data)
 # VM.insertMoney('dollar')
 # VM.insertMoney('dollar')
 

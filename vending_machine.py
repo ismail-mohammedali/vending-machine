@@ -2,12 +2,10 @@ from decimal import Decimal
 from unicodedata import decimal
 import json
 
-class vendingMachine ():
-    def __init__(self) -> None:
-        
-        
-        dataFile = open('database.json')
-        self.data = json.load(dataFile)
+class vendingMachine (): 
+    def __init__(self) -> None: #starting variables for the class 
+
+        self.data = json.load(open('database.json'))
         self.curTotalInMachine = Decimal("{:.2f}".format(float(0.00)))
         
         
@@ -29,23 +27,23 @@ class vendingMachine ():
         # #              'translation':self.translation,
         # #              'password':self.password}
     
-    def storeInDatabase(self):
+    def storeInDatabase(self): # using this method to store data after changes are made to database json
         
         filename = 'database.json'
         with open(filename, "w") as f:
             f.write(json.dumps(self.data))
         
     
-    def insertMoney (self,amount):
+    def insertMoney (self,amount): # This method adds amount to varible moneyInMachine 
         
         
         self.curTotalInMachine += Decimal(self.data['translation'][amount])
         #self.curTotalInMachine =round(self.curTotalInMachine, 2)
         self.data['moneyInMachine'][self.data['translation'][amount]]+=1
         print('After Inserting {} your total is {:.2f}'.format(amount,self.curTotalInMachine))
+        return True
     
-    
-    def coinReturn(self):
+    def coinReturn(self): #This method returns the coin in dict format highest amount returned first
         coinReturn = {}
         translation = {              
         }
@@ -73,7 +71,7 @@ class vendingMachine ():
                 x-=1
         self.storeInDatabase()    
         return coinReturn    
-    def getItem(self,item):
+    def getItem(self,item): # this method uses the moneyInMachine varible and data var to use the money in exchange of the amount
         
         if item not in self.data['product']:
             print("the product doesn't exist. Please try again")
@@ -90,9 +88,10 @@ class vendingMachine ():
             return False
         self.data['product'][item]['quantity']-=1
         self.curTotalInMachine = self.curTotalInMachine - price 
+        
         self.storeInDatabase()
         return True
-    def service(self,password):
+    def service(self,password): # This method can help service the machine where amount saved in the machine and change the quanitty of the product 
         #1- Ability to change amount 
         #2- ability to add and remove items 
         #3- 
@@ -114,15 +113,17 @@ class vendingMachine ():
                     
                     
             elif action ==2: 
-                pass
+                print("In progress")
+            #To Do - create a process where the user can edit the quantity for the current products
             
         self.storeInDatabase()    
         
         
-
-VM = vendingMachine()
+if __name__ == '__main__':
+    pass
+#VM = vendingMachine()
 #print(VM.data)
-VM.service("Admin")
+#VM.service("Admin")
 # VM.insertMoney('dollar')
 # VM.insertMoney('dollar')
 # VM.insertMoney('dime')

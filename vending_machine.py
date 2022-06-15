@@ -35,7 +35,7 @@ class vendingMachine ():
         sorted_amount = [float(x) for x in self.data['moneyInMachine']]
         sorted_amount.sort()
         x = -1
-        print(sorted_amount)
+        #print(sorted_amount)
         #print(sorted_amount[-1])
         self.curTotalInMachine=Decimal('{:.2f}'.format(self.curTotalInMachine))
         while self.curTotalInMachine> 0.01:
@@ -108,17 +108,36 @@ if __name__ == '__main__':
     
     while True: 
         for count, product in enumerate(VM.itemsForSale):
-            print('Please enter {} to get {}'.format(count+1,product))
-        print('Please enter 0 for service')
-        print('Enter -1 to quit the application')
-        action =int(input())
+            print('Please enter {} to get {}\n'.format(count+1,product))
+        print('Please enter 0 for service\n')
+        
+        action =int(input('Enter -1 to quit the application\n'))
         if action > 0 and action <= len(VM.itemsForSale):
-            pass
+            productPrice = VM.data['product'][VM.itemsForSale[action-1]]['price']
+            productName = VM.itemsForSale[action-1]
+            print('please enter {} to get {}'.format(productPrice,productName))
+            
+            
+            while True:
+                amount = ['quarter','nickel','dime','dollar']
+                print('\n\nPlease enter "quarter", "nickel", "dime", "dollar" to VM')
+                print('\nPlease enter anything else to quit entering money\n')
+                amountAdded = input()
+                
+                if amountAdded not in amount and input('Are you sure you have compelted adding money?\n').lower() == 'yes':    
+                    break 
+                VM.insertMoney(amountAdded)
+            if VM.getItem(productName):
+                print('Item vend was a success!!')
+                
+            else: 
+                print('Item vend was unsuccessful, Your amount will be returned\nPlease try again correcting the issue!')
+            print('The following amount was returned to you {}'.format(VM.coinReturn()))   
         elif action == 0:
             password = input("Please enter password to access service mode")
             VM.service(password) 
         elif action == -1: 
-            print('\n\n\nThank you for using our VM. Please come again :)')
+            print('\n\nThank you for using our VM. Please come again :)')
             break
         
         

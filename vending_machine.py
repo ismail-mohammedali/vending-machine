@@ -1,3 +1,4 @@
+from argparse import Action
 from decimal import Decimal
 from unicodedata import decimal
 import json
@@ -7,25 +8,8 @@ class vendingMachine ():
 
         self.data = json.load(open('database.json'))
         self.curTotalInMachine = Decimal("{:.2f}".format(float(0.00)))
+        self.itemsForSale = [x for x in self.data['product']]
         
-        
-        # self.moneyInMachine = {.25:100,
-        #  .05:100,
-        #  .10:100,
-        #  1:100    }
-        # self.translation = {'quarter':.25,
-        #  'nickel':.05,
-        #  'dime':.10,
-        #  'dollar':1,
-        #  .25:'quarter',
-        #  .05:'nickel',
-        #  .10:'dime',
-        #  1:'dollar'                  
-        # }
-        # # self.password = "Admin"
-        # # self.data = {'moneyInMachine':self.moneyInMachine,
-        # #              'translation':self.translation,
-        # #              'password':self.password}
     
     def storeInDatabase(self): # using this method to store data after changes are made to database json
         
@@ -67,7 +51,7 @@ class vendingMachine ():
                 
                 coinReturn[self.data['translation']['{:.2f}'.format(sorted_amount[x])]]=coinReturn.get(self.data['translation']['{:.2f}'.format(sorted_amount[x])],0)+1
             else: 
-                #print(x)
+               
                 x-=1
         self.storeInDatabase()    
         return coinReturn    
@@ -92,9 +76,7 @@ class vendingMachine ():
         self.storeInDatabase()
         return True
     def service(self,password): # This method can help service the machine where amount saved in the machine and change the quanitty of the product 
-        #1- Ability to change amount 
-        #2- ability to add and remove items 
-        #3- 
+        
         if self.data['password'] != password:
             return "The Password is incorrect"
         action = 0 
@@ -120,34 +102,23 @@ class vendingMachine ():
         
         
 if __name__ == '__main__':
-    pass
-#VM = vendingMachine()
-#print(VM.data)
-#VM.service("Admin")
-# VM.insertMoney('dollar')
-# VM.insertMoney('dollar')
-# VM.insertMoney('dime')
-# VM.insertMoney('nickel')
-# VM.insertMoney('quarter')
-# print(VM.curTotalInMachine)
-# VM.getItem('itemA')
-# VM.getItem('itemA')
-# print(VM.curTotalInMachine)
-# print(VM.data)
-# print(VM.coinReturn())
-# print(VM.data)
-# VM.insertMoney('dollar')
-# VM.insertMoney('dollar')
-
-# VM.insertMoney('quarter')
-# VM.insertMoney('quarter')
-# VM.insertMoney('quarter')
-# VM.insertMoney('quarter')
-# VM.insertMoney('dollar')
-# VM.insertMoney('dime')
-# VM.insertMoney('nickel')
-
-# print(VM.coinReturn())
-#VM.moneyInMachine[.25]=101
-#print(VM.moneyInMachine[.25])
-#print(VM.service('Admin'))
+    
+    print("welcome to VM\n\n")
+    VM = vendingMachine()
+    
+    while True: 
+        for count, product in enumerate(VM.itemsForSale):
+            print('Please enter {} to get {}'.format(count+1,product))
+        print('Please enter 0 for service')
+        print('Enter -1 to quit the application')
+        action =int(input())
+        if action > 0 and action <= len(VM.itemsForSale):
+            pass
+        elif action == 0:
+            password = input("Please enter password to access service mode")
+            VM.service(password) 
+        elif action == -1: 
+            print('\n\n\nThank you for using our VM. Please come again :)')
+            break
+        
+        
